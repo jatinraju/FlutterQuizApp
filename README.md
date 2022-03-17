@@ -8,7 +8,7 @@ This project is a starting point for a Flutter application.
 
 Description:
 	It is basically a Quiz app in which you just give answers to some questions and get the result accordingly like either you are innocent or strange.
-	Got and Check it out.
+	Go and Check it out.
 
 
 A few resources to get you started if this is your first Flutter project:
