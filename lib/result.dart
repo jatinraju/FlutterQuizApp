@@ -6,8 +6,10 @@ class Result extends StatelessWidget {
   Result(this.resultScore, this.resetHandler);
 
   String get resultPhrase {
-    var resultText = 'You did it!';
-    if (resultScore <= 8) {
+    var resultText;
+    if (resultScore == 0) {
+      resultText = 'Try to Answer atleast one Question...';
+    } else if (resultScore <= 8) {
       resultText = 'You are Awesome and innocent';
     } else if (resultScore <= 12) {
       resultText = 'Pretty Likeable!';
@@ -23,6 +25,7 @@ class Result extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           Text(
             resultPhrase,
@@ -33,7 +36,7 @@ class Result extends StatelessWidget {
             onPressed: resetHandler,
             child: Text(
               'Restart Quiz!',
-              style: TextStyle(fontSize: 16),
+              style: TextStyle(fontSize: 20),
             ),
             textColor: Colors.blue,
           )

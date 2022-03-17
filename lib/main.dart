@@ -59,19 +59,88 @@ class MyAppState extends State<MyApp> {
     //print(_questionIndex);
   }
 
+  void questionNext() {
+    setState(() {
+      if (_questionIndex >= questions.length) {
+        _questionIndex = questions.length;
+      } else {
+        _questionIndex += 1;
+      }
+      print(_questionIndex);
+    });
+  }
+
+  void questionPrevious() {
+    setState(() {
+      if (_questionIndex <= 0) {
+        _questionIndex = 0;
+      } else {
+        _questionIndex -= 1;
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        home: Scaffold(
-      appBar: AppBar(
-        title: Text('My Quiz'),
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData(fontFamily: 'Raleway'),
+      home: Scaffold(
+        appBar: AppBar(
+            title: Center(
+          child: Text('My Quiz'),
+        )),
+        body: Container(
+          margin: const EdgeInsets.symmetric(vertical: 100),
+          child: Column(
+            children: <Widget>[
+              _questionIndex < questions.length
+                  ? Quiz(
+                      answerQuestion: answerQuestion,
+                      questions: questions,
+                      questionIndex: _questionIndex,
+                    )
+                  : Result(_totalScore, resetQuiz),
+            ],
+          ),
+        ),
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+        floatingActionButton: Stack(
+          fit: StackFit.expand,
+          children: [
+            Positioned(
+              left: 30,
+              bottom: 20,
+              child: FloatingActionButton(
+                heroTag: 'back',
+                onPressed: questionPrevious,
+                child: const Icon(
+                  Icons.arrow_left,
+                  size: 40,
+                ),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+              ),
+            ),
+            Positioned(
+              bottom: 20,
+              right: 30,
+              child: FloatingActionButton(
+                heroTag: 'next',
+                onPressed: questionNext,
+                child: const Icon(
+                  Icons.arrow_right,
+                  size: 40,
+                ),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
-      body: _questionIndex < questions.length
-          ? Quiz(
-              answerQuestion: answerQuestion,
-              questions: questions,
-              questionIndex: _questionIndex)
-          : Result(_totalScore, resetQuiz),
-    ));
+    );
   }
 }
